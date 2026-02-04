@@ -149,7 +149,7 @@ Run:
 
 ```bash
 docker build -t apache-http .
-docker run -p 8080:80 apache-http
+docker run -p 8080:80 --name httpd01 apache-http
 ```
 
 ---
