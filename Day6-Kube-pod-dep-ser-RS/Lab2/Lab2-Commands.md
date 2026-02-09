@@ -1,12 +1,13 @@
-## Simple Kube files
+## deployment Kube files
 
-inside Lab1, there is pod.yaml and service.yaml
+inside Lab2, there is deployment.yaml and service.yaml
 
 
 Inside the folder 
 ```
 kubectl apply -f .
 kubectl get pods 
+kubectl get deployment
 kubectl get svc
 ```
 
