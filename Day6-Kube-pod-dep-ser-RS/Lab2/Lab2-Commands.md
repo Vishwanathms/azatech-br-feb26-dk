@@ -11,4 +11,12 @@ kubectl get deployment
 kubectl get svc
 ```
 
+* delete a pod 
+```
+kubectl delete pod <pod-name>
+```
+sample of pod name in deployment -- deploymentname-replicaset-podvalue
+
+* observe that the service.yaml file is the same use din lab1
+
 

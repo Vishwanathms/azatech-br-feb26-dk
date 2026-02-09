@@ -11,3 +11,7 @@ kubectl get svc
 ```
 
 
+* To delete the setup 
+```
+kubectl delete -f lab1
+```
