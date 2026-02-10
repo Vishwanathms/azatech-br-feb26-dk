@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-deploy
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+        - name: python-container
+          image: vishwacloudlab/pythonapp:v4-var
+          ports:
+            - containerPort: 8000
+          env: 
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: py1-config
+                  key: REDIS_HOST
+
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app/config    
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+      volumes:
+      - name: config-volume
+        configMap:
+          name: py1-config
+          items:
+            - key: testval
+              path: testval1.txt
+            - key: testval2 
+              path: testval2.txt
