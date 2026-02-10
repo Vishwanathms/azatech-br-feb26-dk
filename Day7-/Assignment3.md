@@ -5,6 +5,7 @@ export all the required option for your app as configmap values and pass it via 
 
 Task4
 create your own image using the below app.py
+Assuming that dockerfile , requirements.txt you can reuse.
 
 ```
 import os
@@ -29,6 +30,12 @@ if __name__ == "__main__":
 docker build . -t stackdemo:configmap
 ```
 * change the image name with docker id
+```
+docker tag stackdemo:configmap  dockerhubid/stackdemo:configmap
+```
 * push it to the docker hub 
+```
+docker push dockerhubid/stackdemo:configmap
+```
 * update your kube yaml files with your own images 
 * get the similar output.
