@@ -23,7 +23,7 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: Redis_host
+            - name: REDIS_HOST
               value: "redis-service"
           resources:
             requests:
