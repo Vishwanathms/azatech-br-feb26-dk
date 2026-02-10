@@ -1,12 +1,14 @@
-Task3
+Task3 -- Assignemnt work
 
 Update the application yaml files created in Task2 with configmap 
 export all the required option for your app as configmap values and pass it via the yaml file
 
+=================================================
 Task4
 create your own image using the below app.py
 Assuming that dockerfile , requirements.txt you can reuse.
 
+* app.py
 ```
 import os
 from flask import Flask
@@ -25,6 +27,24 @@ def hello():
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
 ```
+
+* Dockerfile
+```
+FROM python:3.9-alpine
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
+
+```
+
+* requirements.txt
+```
+flask
+redis
+```
+
+
 * move inside the app.py folder
 ```
 docker build . -t stackdemo:configmap
