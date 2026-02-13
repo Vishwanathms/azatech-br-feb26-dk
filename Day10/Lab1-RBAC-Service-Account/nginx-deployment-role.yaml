@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nginx-deployment-manager
+  namespace: rbac-nginx-demo
+rules:
+  # Allow management of only this specific deployment
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["nginx-deploy"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+
+  # Allow reading pods (to verify rollout)
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
