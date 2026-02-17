@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Chart.Name }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      nodePort: {{ .Values.service.nodePort }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "python-app.fullname" . }}-redis
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.redis.service.port }}
+      targetPort: {{ .Values.redis.service.port }}
+  selector:
+    app: {{ include "python-app.name" . }}-redis

@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  #repository: vishwacloudlab/jenkins-docker-lab
+  repository: vishwacloudlab/pythonapp
+  tag: v4-var
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
+  targetPort: 8000
+  nodePort: 30016
+
+resources: {}
+
+namespace: u16
+
+env:
+  APP_PORT: 5000
+
+redis:
+  replicaCount: 1
+  image:
+    repository: redis
+    tag: "7"
+    pullPolicy: IfNotPresent
+  service:
+    port: 6379

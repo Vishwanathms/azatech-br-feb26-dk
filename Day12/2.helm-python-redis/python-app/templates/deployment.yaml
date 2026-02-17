@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: REDIS_HOST
+              value: {{ include "python-app.fullname" . }}-redis   # Kubernetes Service name for Redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+            - name: APP_PORT
+              value: "{{ .Values.env.APP_PORT }}"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "python-app.fullname" . }}-redis
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "python-app.name" . }}-redis
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "python-app.name" . }}-redis
+  template:
+    metadata:
+      labels:
+        app: {{ include "python-app.name" . }}-redis
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.redis.service.port }}
