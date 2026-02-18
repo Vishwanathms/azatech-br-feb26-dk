@@ -8,16 +8,16 @@ image:
 
 service:
   type: NodePort
-  port: 5000
-  targetPort: 5000
-  nodePort: 30016
+  port: 8000
+  targetPort: 8000
+  nodePort: 31016
 
 resources: {}
 
 namespace: u16
 
 env:
-  APP_PORT: 5000
+  APP_PORT: 8000
 
 redis:
   replicaCount: 1
