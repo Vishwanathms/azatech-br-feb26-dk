@@ -1,20 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.fullnameOverride }}
+  name: {{ include "nginx.fullname" . }}
   labels:
-    {{- toYaml .Values.podLabels | nindent 4 }}
+    {{- include "nginx.labels" . | nindent 4 }}
 spec:
 
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- toYaml .Values.podLabels | nindent 4 }}
+      {{- include "nginx.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      name: {{ .Values.fullnameOverride }}
       labels:
-        {{- toYaml .Values.podLabels | nindent 4 }}
+        {{- include "nginx.selectorLabels" . | nindent 8 }}
     spec:
 
       containers:
@@ -30,9 +29,15 @@ spec:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /
               port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
 
 
