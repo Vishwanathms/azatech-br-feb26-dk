@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: redis-deploy
 spec:
-  replicas: 5
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -11,17 +11,17 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: nginx
+      app: redis-app
   template:
     metadata:
       labels:
-        app: nginx
+        app: redis-app
     spec:
       containers:
-        - name: nginx-container
-          image: nginx:latest
+        - name: redis-container
+          image: redis:latest
           ports:
-            - containerPort: 80
+            - containerPort: 6379
           resources:
             requests:
               cpu: "100m"
