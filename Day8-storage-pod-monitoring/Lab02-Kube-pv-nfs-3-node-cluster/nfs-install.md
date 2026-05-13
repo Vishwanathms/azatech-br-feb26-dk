@@ -50,6 +50,20 @@ sudo ufw reload
 
 ---
 
+## 3 Client installation
+
+For Ubuntu
+```
+sudo apt install nfs-common
+```
+
+Check the access
+
+```
+showmount -e <NFS_SERVER_IP>
+```
+---
+
 ## **Summary Table**
 
 | Step                    | Command/Description                                            |
@@ -67,3 +81,5 @@ Let me know if you need:
 * The **PersistentVolumeClaim** YAML as well,
 * How to mount/test from the worker node,
 * Or if you want this for CentOS/RHEL (commands change slightly)!
+
+
