@@ -1,7 +1,7 @@
 Assume your Helm chart structure is like this:
 
 ```bash
-mychart/
+py-redis-app/
 ├── Chart.yaml
 ├── values.yaml
 ├── templates/
@@ -29,19 +29,19 @@ kubectl create namespace dev
 ## Lint Chart
 
 ```bash
-helm lint ./mychart
+helm lint ./py-redis-app
 ```
 
 ## Render Templates
 
 ```bash
-helm template pyredis ./mychart
+helm template pyredis ./py-redis-app
 ```
 
 ## Dry Run Deployment
 
 ```bash
-helm install pyredis ./mychart -n dev --dry-run --debug
+helm install pyredis ./py-redis-app  --dry-run --debug
 ```
 
 ---
@@ -51,20 +51,20 @@ helm install pyredis ./mychart -n dev --dry-run --debug
 ## Basic Install
 
 ```bash
-helm install pyredis ./mychart -n dev
+helm install pyredis ./py-redis-app 
 ```
 
 ## Install with Custom Values
 
 ```bash
-helm install pyredis ./mychart -n dev -f values-prod.yaml
+helm install pyredis ./py-redis-app  -f values-prod.yaml
 ```
 
 ## Install with Inline Variables
 
 ```bash
-helm install pyredis ./mychart \
--n dev \
+helm install pyredis ./py-redis-app \
+ \
 --set image.tag=v1 \
 --set replicaCount=2
 ```
@@ -76,31 +76,31 @@ helm install pyredis ./mychart \
 ## List Helm Releases
 
 ```bash
-helm list -n dev
+helm list 
 ```
 
 ## Get All Kubernetes Resources
 
 ```bash
-kubectl get all -n dev
+kubectl get all 
 ```
 
 ## Get Pods
 
 ```bash
-kubectl get pods -n dev
+kubectl get pods 
 ```
 
 ## Watch Pods
 
 ```bash
-kubectl get pods -n dev -w
+kubectl get pods  -w
 ```
 
 ## Describe Pod
 
 ```bash
-kubectl describe pod <pod-name> -n dev
+kubectl describe pod <pod-name> 
 ```
 
 ## Check Logs
@@ -108,13 +108,13 @@ kubectl describe pod <pod-name> -n dev
 ### Python App Logs
 
 ```bash
-kubectl logs -f deployment/python-app -n dev
+kubectl logs -f deployment/python-app 
 ```
 
 ### Redis Logs
 
 ```bash
-kubectl logs -f deployment/redis -n dev
+kubectl logs -f deployment/redis 
 ```
 
 ---
@@ -124,31 +124,31 @@ kubectl logs -f deployment/redis -n dev
 ## Show Release Status
 
 ```bash
-helm status pyredis -n dev
+helm status pyredis 
 ```
 
 ## Show Values
 
 ```bash
-helm get values pyredis -n dev
+helm get values pyredis 
 ```
 
 ## Show Manifest
 
 ```bash
-helm get manifest pyredis -n dev
+helm get manifest pyredis 
 ```
 
 ## Show Hooks
 
 ```bash
-helm get hooks pyredis -n dev
+helm get hooks pyredis 
 ```
 
 ## Show History
 
 ```bash
-helm history pyredis -n dev
+helm history pyredis 
 ```
 
 ---
@@ -158,7 +158,7 @@ helm history pyredis -n dev
 ## Port Forward Python App
 
 ```bash
-kubectl port-forward svc/python-app 8080:80 -n dev
+kubectl port-forward svc/python-app 8080:80 
 ```
 
 Access:
@@ -174,7 +174,7 @@ http://localhost:8080
 ### Open Redis Pod
 
 ```bash
-kubectl exec -it deployment/redis -n dev -- sh
+kubectl exec -it deployment/redis  -- sh
 ```
 
 ### Run Redis CLI
@@ -202,30 +202,30 @@ PONG
 ## Upgrade Using Same Values
 
 ```bash
-helm upgrade pyredis ./mychart -n dev
+helm upgrade pyredis ./py-redis-app 
 ```
 
 ## Upgrade with New Image
 
 ```bash
-helm upgrade pyredis ./mychart \
--n dev \
+helm upgrade pyredis ./py-redis-app \
+ \
 --set image.tag=v2
 ```
 
 ## Upgrade with Values File
 
 ```bash
-helm upgrade pyredis ./mychart \
--n dev \
+helm upgrade pyredis ./py-redis-app \
+ \
 -f values-prod.yaml
 ```
 
 ## Dry Run Upgrade
 
 ```bash
-helm upgrade pyredis ./mychart \
--n dev \
+helm upgrade pyredis ./py-redis-app \
+ \
 --dry-run --debug
 ```
 
@@ -236,11 +236,11 @@ helm upgrade pyredis ./mychart \
 ## Check Rollout Status
 
 ```bash
-kubectl rollout status deployment/python-app -n dev
+kubectl rollout status deployment/python-app 
 ```
 
 ```bash
-kubectl rollout status deployment/redis -n dev
+kubectl rollout status deployment/redis 
 ```
 
 ---
@@ -248,11 +248,11 @@ kubectl rollout status deployment/redis -n dev
 ## Restart Deployment
 
 ```bash
-kubectl rollout restart deployment/python-app -n dev
+kubectl rollout restart deployment/python-app 
 ```
 
 ```bash
-kubectl rollout restart deployment/redis -n dev
+kubectl rollout restart deployment/redis 
 ```
 
 ---
@@ -260,7 +260,7 @@ kubectl rollout restart deployment/redis -n dev
 ## View Rollout History
 
 ```bash
-kubectl rollout history deployment/python-app -n dev
+kubectl rollout history deployment/python-app 
 ```
 
 ---
@@ -268,7 +268,7 @@ kubectl rollout history deployment/python-app -n dev
 ## Undo Rollout
 
 ```bash
-kubectl rollout undo deployment/python-app -n dev
+kubectl rollout undo deployment/python-app 
 ```
 
 ---
@@ -278,7 +278,7 @@ kubectl rollout undo deployment/python-app -n dev
 ## View Revision History
 
 ```bash
-helm history pyredis -n dev
+helm history pyredis 
 ```
 
 Example:
@@ -295,7 +295,7 @@ REVISION    STATUS
 ## Rollback to Previous Version
 
 ```bash
-helm rollback pyredis 2 -n dev
+helm rollback pyredis 2 
 ```
 
 ---
@@ -303,11 +303,11 @@ helm rollback pyredis 2 -n dev
 ## Verify Rollback
 
 ```bash
-helm status pyredis -n dev
+helm status pyredis 
 ```
 
 ```bash
-kubectl get pods -n dev
+kubectl get pods 
 ```
 
 ---
@@ -315,7 +315,7 @@ kubectl get pods -n dev
 # 10. Uninstall Helm Chart
 
 ```bash
-helm uninstall pyredis -n dev
+helm uninstall pyredis 
 ```
 
 ---
@@ -333,19 +333,19 @@ kubectl delete namespace dev
 ## Find Events
 
 ```bash
-kubectl get events -n dev --sort-by=.metadata.creationTimestamp
+kubectl get events  --sort-by=.metadata.creationTimestamp
 ```
 
 ## Check YAML Applied
 
 ```bash
-kubectl get deployment python-app -n dev -o yaml
+kubectl get deployment python-app  -o yaml
 ```
 
 ## Shell into Python Pod
 
 ```bash
-kubectl exec -it deployment/python-app -n dev -- sh
+kubectl exec -it deployment/python-app  -- sh
 ```
 
 ---
@@ -353,8 +353,8 @@ kubectl exec -it deployment/python-app -n dev -- sh
 # 13. Production Recommended Install
 
 ```bash
-helm upgrade --install pyredis ./mychart \
--n dev \
+helm upgrade --install pyredis ./py-redis-app \
+ \
 --create-namespace \
 -f values-prod.yaml
 ```
@@ -373,13 +373,13 @@ This command:
 ## Download Dependencies
 
 ```bash
-helm dependency update ./mychart
+helm dependency update ./py-redis-app
 ```
 
 ## Build Dependencies
 
 ```bash
-helm dependency build ./mychart
+helm dependency build ./py-redis-app
 ```
 
 ---
@@ -395,19 +395,19 @@ kubectl describe pod <pod>
 ## CrashLoopBackOff
 
 ```bash
-kubectl logs <pod> -n dev --previous
+kubectl logs <pod>  --previous
 ```
 
 ## Image Pull Errors
 
 ```bash
-kubectl describe pod <pod> -n dev
+kubectl describe pod <pod> 
 ```
 
 ## Validate Rendered YAML
 
 ```bash
-helm template pyredis ./mychart > output.yaml
+helm template pyredis ./py-redis-app > output.yaml
 ```
 
 Validate:
