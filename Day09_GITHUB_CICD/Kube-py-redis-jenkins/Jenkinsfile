@@ -46,6 +46,8 @@ pipeline {
     stage('Deploy - Template and Apply') {
         steps {
             sh '''
+            export KUBECONFIG=$HOME/k8s-3-node.conf
+            kubectl apply -f pv.yaml -f pvc.yaml -f py-service.yaml -f redis-service.yaml -f redis-deploy.yaml
             export IMAGE_TAG=$BUILD_NUMBER
             envsubst < py-deploy.yaml | kubectl apply -f -
             kubectl rollout status deployment/py-deploy

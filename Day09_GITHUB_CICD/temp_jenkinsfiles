@@ -1,0 +1,32 @@
+pipeline {
+  agent {label 'vishwa-kube'}
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('Check on Kubernetes') {
+      steps {
+        sh '''
+
+          kubectl get pods
+          kubectl get svc
+          kubectl get deployments
+        '''
+      }
+    }
+    stage('Deployment on Kubernetes') {
+      steps {
+        sh '''
+          kubectl apply -f .
+        '''
+      }
+    }
+
+
+  }
+}
+

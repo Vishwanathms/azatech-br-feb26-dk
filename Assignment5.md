@@ -1,6 +1,4 @@
 
-Assignment4 
+Assignmen5
 
-Now deploy the complete app on the 3 node kubernetes cluster
-Make the docker image private on your docker ID 
-add secrets to fetch the image privately
+Use the jenkins pipeline for your application as similar to the project pipeline created on Day 10. 
