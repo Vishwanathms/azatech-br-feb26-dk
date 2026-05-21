@@ -20,3 +20,6 @@ You should see:
 Controller pod(s)
 
 Service of type LoadBalancer or NodePort (depending on cluster)
+
+
+helm install py-redis-app py-redis-app
