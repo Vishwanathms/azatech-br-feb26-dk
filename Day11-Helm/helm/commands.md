@@ -236,11 +236,11 @@ helm upgrade pyredis ./py-redis-app \
 ## Check Rollout Status
 
 ```bash
-kubectl rollout status deployment/python-app 
+kubectl rollout status deployment/py-deploy
 ```
 
 ```bash
-kubectl rollout status deployment/redis 
+kubectl rollout status deployment/redis-deploy 
 ```
 
 ---
